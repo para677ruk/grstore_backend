@@ -26,4 +26,4 @@ app.use('/api/products', productRoutes);
 const orderRoutes = require('./routers/order');
 app.use('/api/orders', orderRoutes);
 
-app.listen(5000, () => console.log('Server started on port 5000'));
+app.listen(port, () => console.log(`Server started on port ${port}`));
