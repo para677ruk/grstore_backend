@@ -4,16 +4,21 @@ const router = express.Router();
 
 // Получить все товары с фильтрами и сортировкой
 router.get('/', async (req, res) => {
-  const { brand, sort } = req.query;
-  let filter = {};
-  if (brand) filter.brand = brand;
+  try {
+    const { brand, sort } = req.query;
+    let filter = {};
+    if (brand) filter.brand = brand;
 
-  let sortOption = {};
-  if (sort === 'price_asc') sortOption.price = 1;
-  if (sort === 'price_desc') sortOption.price = -1;
+    let sortOption = {};
+    if (sort === 'price_asc') sortOption.price = 1;
+    if (sort === 'price_desc') sortOption.price = -1;
 
-  const products = await Product.find(filter).sort(sortOption);
-  res.json(products);
+    const products = await Product.find(filter).sort(sortOption);
+    res.json(products);
+  } catch (error) {
+    console.error('Ошибка при получении продуктов:', error);
+    res.status(500).json({ message: 'Ошибка сервера при получении продуктов' });
+  }
 });
 
 // Получить один товар по id
